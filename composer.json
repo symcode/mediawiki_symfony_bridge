@@ -1,7 +1,7 @@
 {
   "name": "symcode/mediawiki_symfony_bridge",
   "type": "mediawiki-extension",
-  "license": 'MIT',
+  "license": "MIT",
   "description": "Use the users of the Symfony Application. Use the Symfony Session. No Login on Wiki Side",
   "keywords": [
     "MediaWiki",
