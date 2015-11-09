@@ -29,24 +29,24 @@ _Important_
 
     $wgSessionName
     
-You need to define here the same Session name as in Symfony. In a future update we will configure this auto.
+You need to define here the same Session name as in symfony. In a future update we will configure this automatically.
 
 ## Features
 
 ### Symfony Session
 
-The current extension will read your Symfony Session.
+The current extension will read your symfony session.
 
-If a Session exist, a User will created in the Wiki Database based on the Symfony Username and the User will be automaticly logged in.
+If a Session exist, a User will created in the Wiki Database based on the symfony username and the User will be automatically logged in.
 
-*Warning* If you allow Username Changes in your Symfony Application you need to handle the Name Change also in MediaWiki. If not the Extension will create a new WikiUser with the new Name and the old Wiki User will stay forever in the Database.
+*Warning* If you allow username changes in your symfony application you need to handle the name change also in MediaWiki. If not the Extension will create a new WikiUser with the new Name and the old Wiki User will stay forever in the Database.
 
 
 ## ToDo
 
 ### User Groups
 
-A upcomming feature will be to use the Symfony User Groups for the Wiki Groups.
+A upcomming feature will be to use the symfony user groups for the wiki groups.
 
 ### Correct Login/Logout redirect
 
