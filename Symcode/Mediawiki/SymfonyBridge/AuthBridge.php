@@ -7,10 +7,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 
 /**
- * Class MultiAuthBridge
+ * Class AuthBridge
  * @package Symcode\Mediawiki\SymfonyBridge
  */
-class MultiAuthBridge extends \AuthPlugin {
+class AuthBridge extends \AuthPlugin {
 
     /**
      * @var bool
@@ -63,7 +63,7 @@ class MultiAuthBridge extends \AuthPlugin {
     protected $symfonyUrl = "";
 
     /**
-     * MultiAuthBridge constructor.
+     * AuthBridge constructor.
      * @param $symfonyRootPath
      * @param $symfonyUrl
      */
