@@ -80,24 +80,30 @@ class AuthBridge extends \AuthPlugin {
         // Specify who may create new accounts:
         $GLOBALS['wgGroupPermissions']['*']['createaccount'] = false;
 
-        // Load Hooks
-        $wgHooks['UserLoginForm'][] = array($this, 'onUserLoginForm', false);
-        $wgHooks['UserLoginComplete'][] = $this;
-        $wgHooks['UserLogout'][] = $this;
+        if(is_dir($this->symfonyRootPath)){
 
-        $wgHooks['UserLoadFromSession'][] = array($this, 'AutoAuthenticateOverSymfony');
+            // Load Hooks
+            $wgHooks['UserLoginForm'][] = array($this, 'onUserLoginForm', false);
+            $wgHooks['UserLoginComplete'][] = $this;
+            $wgHooks['UserLogout'][] = $this;
 
-        $wgHooks['UserLogout'][] = array($this, 'logoutForm');
-        $wgHooks['UserLoginForm'][] = array($this, 'loginForm');
+            $wgHooks['UserLoadFromSession'][] = array($this, 'AutoAuthenticateOverSymfony');
+
+            $wgHooks['UserLogout'][] = array($this, 'logoutForm');
+            $wgHooks['UserLoginForm'][] = array($this, 'loginForm');
 
 
-        require_once $this->symfonyRootPath.'/app/bootstrap.php.cache';
-        require_once $this->symfonyRootPath.'/app/AppKernel.php';
-        $kernel = new \AppKernel('prod', false);
-        Request::enableHttpMethodParameterOverride();
-        $request = Request::createFromGlobals();
-        $kernel->handle($request);
-        $this->symfonyConatiner = $kernel->getContainer();
+            require_once $this->symfonyRootPath.'/app/bootstrap.php.cache';
+            require_once $this->symfonyRootPath.'/app/AppKernel.php';
+            $kernel = new \AppKernel('prod', false);
+            Request::enableHttpMethodParameterOverride();
+            $request = Request::createFromGlobals();
+            $kernel->handle($request);
+            $this->symfonyConatiner = $kernel->getContainer();
+
+        } else {
+            trigger_error("Symfony System not found! Login is not possible!", E_USER_NOTICE);
+        }
     }
 
     /**
