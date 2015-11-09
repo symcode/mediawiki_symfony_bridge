@@ -8,13 +8,13 @@ It will check for an existing user with the help of the username.
 
 ## Installation
 
-  composer require dev-master
+    composer require symcode/mediawiki_symfony_bridge dev-master
 
 ## Configuration
 
-edit your LocalSettings.php and add this at the end
+edit your LocalSettings.php, add this at the end:
 
-  $wgSessionName = "SFSESSID";
-  $wgAuth = new Symcode\Mediawiki\SymfonyBridge\AuthBridge('/your/path/to/symfony/root', 'http://your-symfony-aplication.com');
+    $wgSessionName = "SFSESSID";
+    $wgAuth = new Symcode\Mediawiki\SymfonyBridge\AuthBridge('/your/path/to/symfony/root', 'http://your-symfony-aplication.com');
 
 
