@@ -25,6 +25,12 @@ edit your LocalSettings.php, add this at the end:
     $wgSessionName = "SFSESSID";
     $wgAuth = new Symcode\Mediawiki\SymfonyBridge\AuthBridge('/your/path/to/symfony/root', 'http://your-symfony-aplication.com');
 
+_Important_
+
+    $wgSessionName
+    
+You need to define here the same Session name as in Symfony. In a future update we will configure this auto.
+
 ## Features
 
 ### Symfony Session
@@ -45,3 +51,7 @@ A upcomming feature will be to use the Symfony User Groups for the Wiki Groups.
 ### Correct Login/Logout redirect
 
 Currently the Login/Logout will only redirect to your Symfony URL. But we are planing to get the correct route based in the routing.
+
+### Session Name
+
+We need to get the Session name from the Symfony Configuration and define $wgSessionName in the constructor of our class
