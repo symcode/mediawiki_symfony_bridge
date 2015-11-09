@@ -8,9 +8,9 @@ It will check for an existing user with the help of the username.
 
 ## Important
 
-This Extension require both Systems (Wiki and Symfony) on the same harddrive.
+This Extension require both Systems (Wiki and Symfony) on the same webserver.
 
-And the Wiki (Webserver) User need access to the Symfony Files to initalize the Kernel and get the Session.
+And the Wiki (Webserver/vhost) User need access to the Symfony Files to initalize the Kernel and get the Session.
 
 This Extension *will not* simmulate the Symfony Session via Database Access. We are using the existing Symfony Kernel.
 
