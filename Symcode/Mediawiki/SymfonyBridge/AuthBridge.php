@@ -67,7 +67,7 @@ class AuthBridge extends \AuthPlugin {
      * @param $symfonyRootPath
      * @param $symfonyUrl
      */
-    function __construct($symfonyRootPath, $symfonyUrl) {
+    function __construct($symfonyRootPath, $symfonyUrl, $groupManager = null) {
         global $wgHooks;
 
         $this->symfonyRootPath = $symfonyRootPath;
@@ -101,10 +101,18 @@ class AuthBridge extends \AuthPlugin {
 
             $this->symfonyConatiner = $kernel->getContainer();
 
+            if($groupManager){
+                $groupBridge = new GroupBridge($this, $groupManager);
+                $groupBridge->initGroups();
+                $groupBridge->setUpGroupNamespaces();
+            }
+
         } else {
             trigger_error("Symfony System not found! Login is not possible!", E_USER_NOTICE);
         }
     }
+
+
 
     /**
      * @param $message
@@ -477,6 +485,25 @@ class AuthBridge extends \AuthPlugin {
             $user->mId = $s->user_id;
         }
 
+        $sfGroups = array();
+
+        if(method_exists($symfonyUser, 'getGroups')){
+            $sfGroups = $symfonyUser->getGroups();
+        }
+
+        $oldGroups = $user->getGroups(); // previous groups
+        foreach ( $oldGroups as $group ) {
+            //ignore wiki groups and remove only non wiki groups
+            if(!in_array($group, array('sysop', 'bureaucrat'))){
+                $user->removeGroup( $group ); // remove it
+            }
+        }
+
+        // readd current groups
+        foreach($sfGroups as $sfGroup){
+            $user->addGroup(GroupBridge::getGroupAlias($sfGroup));
+        }
+
         if ( $user->loadFromDatabase() ) {
             $user->saveToCache();
         }
@@ -499,6 +526,13 @@ class AuthBridge extends \AuthPlugin {
     public function loginForm() {
         //TODO get from routings
         header('Location: '.$this->symfonyUrl);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSymfonyConatiner(){
+        return $this->symfonyConatiner;
     }
 
 }

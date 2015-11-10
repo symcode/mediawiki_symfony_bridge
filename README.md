@@ -49,11 +49,24 @@ If a Session exist, a User will created in the Wiki Database based on the symfon
 *Warning* If you allow username changes in your symfony application you need to handle the name change also in MediaWiki. If not the Extension will create a new WikiUser with the new Name and the old Wiki User will stay forever in the Database.
 
 
+### Groups
+
+If your Symfony User Object has an Method "getGroups", the Groups will be added to the wiki user
+
+(Your Group object need an getId() method)
+
+For the best result use the FosUserBundle
+
+### Group Namepspaces
+
+If you want to protect some namespaces only to group users you need to unstall the Lockdown Extension (https://www.mediawiki.org/wiki/Extension:Lockdown)
+
+And then pass a 3t argument to the AuthBridge constructor. This argument need to be your group manager symfony service name (FosUserBundle default is "fos_user.group_manager").
+
+After this the Bridge will add permissions for all symfony groups and create some group namespace where only group members have access
+
+
 ## ToDo
-
-### User Groups
-
-A upcomming feature will be to use the symfony user groups for the wiki groups.
 
 ### Correct Login/Logout redirect
 
