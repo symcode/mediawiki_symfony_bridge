@@ -92,13 +92,14 @@ class AuthBridge extends \AuthPlugin {
             $wgHooks['UserLogout'][] = array($this, 'logoutForm');
             $wgHooks['UserLoginForm'][] = array($this, 'loginForm');
 
-
             require_once $this->symfonyRootPath.'/app/bootstrap.php.cache';
             require_once $this->symfonyRootPath.'/app/AppKernel.php';
             $kernel = new \AppKernel('prod', false);
             Request::enableHttpMethodParameterOverride();
             $request = Request::createFromGlobals();
             $kernel->handle($request);
+
+            var_dump(session_id());
             $this->symfonyConatiner = $kernel->getContainer();
 
         } else {

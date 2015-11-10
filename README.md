@@ -30,6 +30,13 @@ _Important_
     $wgSessionName
     
 You need to define here the same Session name as in symfony. In a future update we will configure this automatically.
+You need to define it in symfony and also you need to define the cookie name for subdomain support ( i.e wiki.xxxx.com symfony.xxx.com or xxx.com )
+
+
+    session:
+        cookie_lifetime: 0
+        name: SFSESSID
+        cookie_domain: ".symcode.de"
 
 ## Features
 
