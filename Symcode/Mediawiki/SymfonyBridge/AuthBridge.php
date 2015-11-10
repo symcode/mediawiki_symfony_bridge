@@ -99,7 +99,6 @@ class AuthBridge extends \AuthPlugin {
             $request = Request::createFromGlobals();
             $kernel->handle($request);
 
-            var_dump(session_id());
             $this->symfonyConatiner = $kernel->getContainer();
 
         } else {
