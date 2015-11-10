@@ -455,13 +455,6 @@ class AuthBridge extends \AuthPlugin {
         if(!$symfonyUser || !is_object($symfonyUser)){
             return false;
         }
-
-        // ID 1 = wiki default user
-        if( $symfonyUser->getId() == 1 || $symfonyUser->getSymbbType() != "user" ) {
-            $result = false;
-            return false;
-        }
-
         $dbr =& wfGetDB( DB_SLAVE );
         $s = $dbr->selectRow( 'user', array('user_id'), array('user_name' => $symfonyUser->getUsername()), "UserAuthSymfony::AutoAuthenticateOverSymfony");
 
