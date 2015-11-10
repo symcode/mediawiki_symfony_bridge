@@ -450,11 +450,16 @@ class AuthBridge extends \AuthPlugin {
      */
     public function AutoAuthenticateOverSymfony( $user, &$result){
 
-        $symfonyUser = $this->symfonyConatiner->get('security.context')->getToken()->getUser();
+        $symfonyToken = $this->symfonyConatiner->get('security.context')->getToken();
+        if(!$symfonyToken || !is_object($symfonyToken)){
+            return false;
+        }
 
+        $symfonyUser = $symfonyToken->getUser();
         if(!$symfonyUser || !is_object($symfonyUser)){
             return false;
         }
+
         $dbr =& wfGetDB( DB_SLAVE );
         $s = $dbr->selectRow( 'user', array('user_id'), array('user_name' => $symfonyUser->getUsername()), "UserAuthSymfony::AutoAuthenticateOverSymfony");
 
