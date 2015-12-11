@@ -95,19 +95,20 @@ class AuthBridge extends \AuthPlugin {
 
             $loader = require $this->symfonyRootPath.'/app/autoload.php';
             require_once $this->symfonyRootPath.'/var/bootstrap.php.cache';
-            if(true){
+
+            if(false){
                 Debug::enable();
                 $kernel = new \AppKernel('dev', true);
             } else {
                 $kernel = new \AppKernel('prod', false);
             }
-            Request::enableHttpMethodParameterOverride();
+            //Request::enableHttpMethodParameterOverride();
             $request = Request::createFromGlobals();
             $kernel->handle($request);
 
             $this->symfonyConatiner = $kernel->getContainer();
 
-            if($groupManager){
+            if($groupManager && $this->symfonyConatiner->has($groupManager)){
                 $groupBridge = new GroupBridge($this, $groupManager);
                 $groupBridge->initGroups();
                 $groupBridge->setUpGroupNamespaces();
@@ -464,7 +465,7 @@ class AuthBridge extends \AuthPlugin {
      */
     public function AutoAuthenticateOverSymfony( $user, &$result){
 
-        $symfonyToken = $this->symfonyConatiner->get('security.context')->getToken();
+        $symfonyToken = $this->symfonyConatiner->get('security.token_storage')->getToken();
         if(!$symfonyToken || !is_object($symfonyToken)){
             return false;
         }
