@@ -4,6 +4,7 @@ namespace Symcode\Mediawiki\SymfonyBridge;
 
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Debug\Debug;
 
 
 /**
@@ -92,9 +93,14 @@ class AuthBridge extends \AuthPlugin {
             $wgHooks['UserLogout'][] = array($this, 'logoutForm');
             $wgHooks['UserLoginForm'][] = array($this, 'loginForm');
 
-            require_once $this->symfonyRootPath.'/app/bootstrap.php.cache';
-            require_once $this->symfonyRootPath.'/app/AppKernel.php';
-            $kernel = new \AppKernel('prod', false);
+            $loader = require $this->symfonyRootPath.'/app/autoload.php';
+            require_once $this->symfonyRootPath.'/var/bootstrap.php.cache';
+            if(true){
+                Debug::enable();
+                $kernel = new \AppKernel('dev', true);
+            } else {
+                $kernel = new \AppKernel('prod', false);
+            }
             Request::enableHttpMethodParameterOverride();
             $request = Request::createFromGlobals();
             $kernel->handle($request);
